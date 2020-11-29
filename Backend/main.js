@@ -10,7 +10,8 @@ const googleRouter = require('./routes/google')
 
 app.use(function(req, res, next) {
     res.header("Access-Control-Allow-Origin", "http://localhost:8080");
-    res.header("Access-Control-Allow-Headers", "X-Requested-With");
+    res.setHeader('Access-Control-Allow-Credentials', 'true'); 
+    res.header("Access-Control-Allow-Headers", "Access-Control-Allow-Headers, Origin,Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers");
     res.header("Access-Control-Allow-Methods", "POST, GET, OPTIONS, DELETE");
     next();
 });
@@ -32,12 +33,30 @@ app.use('/google', googleRouter);
 
 app.get('/test', (req, res) => {
     console.log(req.cookies);
-    res.send("test get")
+    res.cookie('cookie', 'cookie')
+    res.send(`
+        <a href="http://localhost:8080/">test_get</a>
+        <form id="myfrom" method="get" action="http://localhost:8080/">
+            <input type="submit" value="test_GET" />
+        </form>
+        <form id="myfrom" method="post" action="http://localhost:8080/">
+            <input type="submit" value="test_POST" />
+        </form>
+    `)
 })
 
 app.post('/test', (req, res) => {
     console.log(req.cookies);
-    res.send("test post")
+    res.cookie('cookie', 'cookie')
+    res.send(`
+        <a href="http://localhost:8080/">test_get</a>
+        <form id="myfrom" method="get" action="http://localhost:8080/">
+            <input type="submit" value="test_GET" />
+        </form>
+        <form id="myfrom" method="post" action="http://localhost:8080/">
+            <input type="submit" value="test_POST" />
+        </form>
+    `)
 })
 
 app.listen(8081, () => {
