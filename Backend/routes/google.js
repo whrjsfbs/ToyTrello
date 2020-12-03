@@ -10,9 +10,6 @@ passport.use(new GoogleStrategy({
   },
   (accessToken, refreshToken, profile, done) => {
     console.log("[profile]")
-    console.log(profile)
-    console.log("[access token]: " + accessToken);
-    console.log("[refresh token]: " + refreshToken);
     if(accessToken)
         profile.accessToken = accessToken
     if(refreshToken)
@@ -53,9 +50,14 @@ router.get('/logout', (req, res) => {
     req.session.destroy((err) => {
         res.redirect('http://localhost:8080/');
     });
-    // req.session.save(() => {
-    //     res.redirect('http://localhost:8080/');
-    // });
 });
+
+router.get('/user-info', (req, res) => {
+    console.log(req.user);
+    if(!req.user || ( req.user != null && typeof req.user == "object" && !Object.keys(req.user).length ))
+        res.status(401)
+    else
+        res.status(200).send(req.user._raw)
+})
 
 module.exports = router;

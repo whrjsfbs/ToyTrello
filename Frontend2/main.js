@@ -15,13 +15,13 @@ app.get('/', (req, res) => {
             <br />
             <button onClick={postTest}>axios_POST</button>
             <br />
-            <a href="http://192.168.35.223:8081/test">a_GET</a>
+            <a href="http://localhost:8081/test">a_GET</a>
             <br />
-            <form id="myfrom" method="get" action="http://192.168.35.223:8081/test">
+            <form id="myfrom" method="get" action="http://localhost:8081/test">
                 <input type="submit" value="form_GET" />
             </form>
             <br />
-            <form id="myfrom" method="post" action="http://192.168.35.223:8081/test">
+            <form id="myfrom" method="post" action="http://localhost:8081/test">
                 <input type="submit" value="form_POST" />
             </form>
         </div>
@@ -38,13 +38,13 @@ app.post('/', (req, res) => {
             <br />
             <button onClick={postTest}>axios_POST</button>
             <br />
-            <a href="http://192.168.35.223:8081/test">a_GET</a>
+            <a href="http://localhost:8081/test">a_GET</a>
             <br />
-            <form id="myfrom" method="get" action="http://192.168.35.223:8081/test">
+            <form id="myfrom" method="get" action="http://localhost:8081/test">
                 <input type="submit" value="form_GET" />
             </form>
             <br />
-            <form id="myfrom" method="post" action="http://192.168.35.223:8081/test">
+            <form id="myfrom" method="post" action="http://localhost:8081/test">
                 <input type="submit" value="form_POST" />
             </form>
         </div>

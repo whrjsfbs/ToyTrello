@@ -3,3 +3,4 @@ webpack.config.js
 /.vscode
 .eslintrc.js
 /server
+babel.config.js

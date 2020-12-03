@@ -1,9 +1,9 @@
 const express = require('express')
 const app = express()
 const session = require('express-session')
-const fileStore = require('session-file-store')(session)
 const cookieParser = require('cookie-parser')
 const passport = require('passport');
+const MongoStore = require('connect-mongo')(session)
 
 const indexRouter = require('./routes/index')
 const googleRouter = require('./routes/google')
@@ -21,8 +21,14 @@ app.use(cookieParser())
 app.use(session({ 
     secret: 'abcdefg', 
     resave: true, 
-    saveUninitialized: false, 
-    store: new fileStore() 
+    saveUninitialized: false,
+    store: new MongoStore({ 
+        url: "mongodb://mydb:1234@127.0.0.1:27017/myDB",
+        mongoOptions: {
+            useNewUrlParser: true, 
+            useUnifiedTopology: true, 
+        }
+    })
 }));
 
 app.use(passport.initialize());
@@ -30,34 +36,6 @@ app.use(passport.session());
 
 app.use('/', indexRouter);
 app.use('/google', googleRouter);
-
-app.get('/test', (req, res) => {
-    console.log(req.cookies);
-    res.cookie('cookie', 'cookie')
-    res.send(`
-        <a href="http://localhost:8080/">test_get</a>
-        <form id="myfrom" method="get" action="http://localhost:8080/">
-            <input type="submit" value="test_GET" />
-        </form>
-        <form id="myfrom" method="post" action="http://localhost:8080/">
-            <input type="submit" value="test_POST" />
-        </form>
-    `)
-})
-
-app.post('/test', (req, res) => {
-    console.log(req.cookies);
-    res.cookie('cookie', 'cookie')
-    res.send(`
-        <a href="http://localhost:8080/">test_get</a>
-        <form id="myfrom" method="get" action="http://localhost:8080/">
-            <input type="submit" value="test_GET" />
-        </form>
-        <form id="myfrom" method="post" action="http://localhost:8080/">
-            <input type="submit" value="test_POST" />
-        </form>
-    `)
-})
 
 app.listen(8081, () => {
     console.log(`서버가 구동되었습니다. localhost:8081`);

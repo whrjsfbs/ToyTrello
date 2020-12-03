@@ -1,25 +1,29 @@
 import React from "react";
 // import Loading from "../common/loading.jsx";
 // import useAxios from "axios-hooks";
+
+// import { observer } from 'mobx-react'
+// import useStore from "../store/useStore.jsx";
 import axios from "axios";
 
+//const Login = observer(() => {
 const Login = () => {
+  // const stores = useStore();
   // const [{ data, loading, error }] = useAxios("http://localhost:8081/login");
 
   // if (loading) return <Loading />;
   // if (error) return <p>Error</p>;
+
   const getTest = () => {
-    // axios.get("http://localhost:8080").then((result) => {
     axios
-      .get("http://localhost:8081/test", {
+      .get("http://localhost:8081/google/userInfo", {
         headers: {
           "Content-Type": "application/json",
         },
-        // withCredentials: true,
+        withCredentials: true,
       })
       .then((result) => {
         console.log(result);
-        // location.reload();
       });
   };
 
@@ -48,20 +52,15 @@ const Login = () => {
       <br />
       <button onClick={postTest}>axios_POST</button>
       <br />
-      <a href="http://192.168.35.223:8081/test">a_GET</a>
+      <a href="http://192.168.8.134:8081/test">a_GET</a>
       <br />
-      <form id="myfrom" method="get" action="http://192.168.35.223:8081/test">
+      <form id="myfrom" method="get" action="http://192.168.8.134:8081/test">
         <input type="submit" value="form_GET" />
       </form>
       <br />
-      <form id="myfrom" method="post" action="http://192.168.35.223:8081/test">
+      <form id="myfrom" method="post" action="http://192.168.8.134:8081/test">
         <input type="submit" value="form_POST" />
       </form>
-      {/* <a href="http://localhost:8081/test">GET</a>
-      <form id="myfrom" method="post" action="http://localhost:8081/test">
-        <input type="submit" value="POST" />
-      </form> */}
-      {/* <a href="http://localhost:3000/test">눌러</a> */}
     </div>
 
     /* Passport 안쓰고 쌩으로 하는 방법 */
