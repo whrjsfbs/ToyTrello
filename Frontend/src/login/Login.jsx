@@ -1,6 +1,5 @@
 import React from "react";
 // import Loading from "../common/loading.jsx";
-// import useAxios from "axios-hooks";
 
 // import { observer } from 'mobx-react'
 // import useStore from "../store/useStore.jsx";
@@ -9,10 +8,6 @@ import axios from "axios";
 //const Login = observer(() => {
 const Login = () => {
   // const stores = useStore();
-  // const [{ data, loading, error }] = useAxios("http://localhost:8081/login");
-
-  // if (loading) return <Loading />;
-  // if (error) return <p>Error</p>;
 
   const getTest = () => {
     axios
@@ -47,6 +42,7 @@ const Login = () => {
   return (
     <div>
       <a href="http://localhost:8081/google/login">로그인</a>
+      <a href="http://localhost:8081/google/logout">로그아웃</a>
       <br />
       <button onClick={getTest}>axios_GET</button>
       <br />
