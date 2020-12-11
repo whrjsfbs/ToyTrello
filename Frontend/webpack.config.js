@@ -60,7 +60,7 @@ module.exports = {
             banner: '이것은 배너 입니다',
         }),
         new webpack.DefinePlugin({
-            TWO: "1+1"
+            SERVER_DOMAIN: "\"http://localhost:8081\"",
         }),
         new HtmlWebpackPlugin({
             template: "./index.html",

@@ -3,11 +3,11 @@ const router = express.Router();
 const passport = require('passport');
 const GoogleStrategy = require('passport-google-oauth20').Strategy;
 const { getDB } = require('../mongodb/mongo_common');
-const { insertUser } = require('../mongodb/mongo_users');
+const { insertUser, isLogined } = require('../mongodb/mongo_users');
 
 passport.use(new GoogleStrategy({
-    clientID: "320795379479-l50fq88porptr2gp7klcd7hm5agbunm6.apps.googleusercontent.com",
-    clientSecret: "Gik3dKunrWbyVTu6VWiaROgz",
+    clientID: process.env.GOOGLE_CLIENT_ID,
+    clientSecret: process.env.GOOGLE_CLIENT_SECRET,
     callbackURL: "http://localhost:8081/google/callback"
   },
   async (accessToken, refreshToken, profile, done) => {
@@ -18,6 +18,7 @@ passport.use(new GoogleStrategy({
         profile.refreshToken = refreshToken;
     
     try {
+        await isLogined(getDB(), profile.emails[0].value);
         await insertUser(
             getDB(), 
             {
@@ -26,9 +27,7 @@ passport.use(new GoogleStrategy({
             }
         );
     } catch (err) {
-        // 이미 등록된 사용자일 경우도 있음 해당 err는 err가 아님
-        // if(err.error === UNDONE_LIST)
-        //      undone
+        console.log(err);
     }
 
     return done(null, profile);
@@ -56,8 +55,8 @@ router.get('/login',
 
 router.get('/callback',
     passport.authenticate('google', {
-        failureRedirect: 'http://localhost:8080/',
-        successRedirect: 'http://localhost:8080/'
+        failureRedirect: process.env.FRONTEND_DOMAIN,
+        successRedirect: process.env.FRONTEND_DOMAIN
     })
 );
 
@@ -65,7 +64,7 @@ router.get('/logout', (req, res) => {
     console.log("[logout]: " + req.user.displayName)
     req.logout();
     req.session.destroy((err) => {
-        res.redirect('http://localhost:8080/');
+        res.redirect(process.env.FRONTEND_DOMAIN);
     });
 });
 

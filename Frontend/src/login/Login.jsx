@@ -11,7 +11,8 @@ const Login = () => {
 
   const getTest = () => {
     axios
-      .get("http://localhost:8081/google/userInfo", {
+      // eslint-disable-next-line no-undef
+      .get(SERVER_DOMAIN + "/google/userInfo", {
         headers: {
           "Content-Type": "application/json",
         },
@@ -22,41 +23,26 @@ const Login = () => {
       });
   };
 
-  const postTest = () => {
-    axios
-      .post(
-        "http://localhost:8081/test",
-        { data: "post" },
-        {
-          headers: {
-            "Content-Type": "application/json",
-          },
-          withCredentials: true,
-        }
-      )
-      .then((result) => {
-        console.log(result);
-      });
-  };
-
   return (
     <div>
-      <a href="http://localhost:8081/google/login">로그인</a>
-      <a href="http://localhost:8081/google/logout">로그아웃</a>
+      <a
+        href={
+          // eslint-disable-next-line no-undef
+          SERVER_DOMAIN + "/google/login"
+        }
+      >
+        로그인
+      </a>
+      <a
+        href={
+          // eslint-disable-next-line no-undef
+          SERVER_DOMAIN + "/google/logout"
+        }
+      >
+        로그아웃
+      </a>
       <br />
       <button onClick={getTest}>axios_GET</button>
-      <br />
-      <button onClick={postTest}>axios_POST</button>
-      <br />
-      <a href="http://192.168.8.134:8081/test">a_GET</a>
-      <br />
-      <form id="myfrom" method="get" action="http://192.168.8.134:8081/test">
-        <input type="submit" value="form_GET" />
-      </form>
-      <br />
-      <form id="myfrom" method="post" action="http://192.168.8.134:8081/test">
-        <input type="submit" value="form_POST" />
-      </form>
     </div>
 
     /* Passport 안쓰고 쌩으로 하는 방법 */
